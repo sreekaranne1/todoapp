@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+const AddToDo = (props) => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [toDo, setToDo] = useState("");
 
-const AddToDo = () => {
+  const clickHandler = () => {
+    console.log(toDo);
+    console.log(selectedDate.getDate());
+    if (toDo && selectedDate) {
+      const data = {
+        toDo,
+        selectedDate,
+      };
+      props.toDoHandler(data);
+      setToDo("");
+      setSelectedDate(new Date());
+    }
+  };
   return (
     <div>
-      <div class="row m-1 p-3">
-        <div class="col col-11 mx-auto">
+      <div className="row m-1 p-3">
+        <div className="col col-11 mx-auto">
           <div
-            class="
+            className="
           row
           bg-white
           rounded
@@ -17,9 +34,9 @@ const AddToDo = () => {
           justify-content-center
         "
           >
-            <div class="col">
+            <div className="col">
               <input
-                class="
+                className="
               form-control form-control-lg
               border-0
               add-todo-input
@@ -28,24 +45,25 @@ const AddToDo = () => {
             "
                 type="text"
                 placeholder="Add new .."
+                value={toDo}
+                onChange={(event) => {
+                  setToDo(event.target.value);
+                }}
               />
             </div>
-            <div class="col-auto m-0 px-2 d-flex align-items-center">
-              <label
-                class="
-              text-secondary
-              my-2
-              p-0
-              px-1
-              view-opt-label
-              due-date-label
-              d-none
-            "
-              >
-                Due date not set
-              </label>
+            <div className="col-auto m-0 px-2 d-flex align-items-center">
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => {
+                  setSelectedDate(date);
+                }}
+                dateFormat="dd/MM/yyyy"
+                isClearable
+                showYearDropdown
+                scrollableMonthYearDropdown
+              />
               <i
-                class="
+                className="
               fa fa-calendar
               my-2
               px-1
@@ -57,23 +75,13 @@ const AddToDo = () => {
                 data-placement="bottom"
                 title="Set a Due date"
               ></i>
-              <i
-                class="
-              fa fa-calendar-times-o
-              my-2
-              px-1
-              text-danger
-              btn
-              clear-due-date-button
-              d-none
-            "
-                data-toggle="tooltip"
-                data-placement="bottom"
-                title="Clear Due date"
-              ></i>
             </div>
-            <div class="col-auto px-0 mx-0 mr-2">
-              <button type="button" class="btn btn-primary">
+            <div className="col-auto px-0 mx-0 mr-2">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={clickHandler}
+              >
                 Add
               </button>
             </div>
