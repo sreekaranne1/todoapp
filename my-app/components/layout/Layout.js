@@ -7,7 +7,7 @@ const Layout = (props) => {
     <div className="container m-5 p-2 rounded mx-auto bg-light shadow">
       <MainNavigation />
       <Filter />
-      <div class="p-2 mx-4 border-black-25 border-bottom"></div>
+      <div className="p-2 mx-4 border-black-25 border-bottom"></div>
       <main>{props.children}</main>
     </div>
   );
