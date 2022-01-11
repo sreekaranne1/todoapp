@@ -35,3 +35,10 @@ body {
 .todo-item.editing .todo-actions .edit-icon {
   display: none !important;
 }
+.todo-row {
+  margin: "2%";
+}
+
+.todo-row:hover {
+  transform: scale(1.07);
+}
