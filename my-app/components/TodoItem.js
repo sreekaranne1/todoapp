@@ -5,6 +5,10 @@ import useToggleState from "../hooks/useToggleState";
 const TodoItem = (props) => {
   const { todo } = props;
   const [isEditing, toggle] = useToggleState(false);
+  const deleteHandler = (e) => {
+    e.stopPropagation();
+    props.deleteItem(todo);
+  };
   if (isEditing) {
     return (
       <div
@@ -18,7 +22,11 @@ const TodoItem = (props) => {
     justify-content-center todo-row"
         style={{ margin: "2%" }}
       >
-        <EditToDoForm task={todo.toDo} toggleEditForm={toggle} />
+        <EditToDoForm
+          task={todo}
+          toggleEditForm={toggle}
+          editItem={props.editItem}
+        />
       </div>
     );
   }
@@ -115,6 +123,7 @@ const TodoItem = (props) => {
                 data-toggle="tooltip"
                 data-placement="bottom"
                 title="Delete todo"
+                onClick={deleteHandler}
               ></i>
             </h5>
           </div>

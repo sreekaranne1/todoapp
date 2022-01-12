@@ -18,6 +18,15 @@ export async function insertData(data) {
   newref.set(data);
 }
 
+export async function edittodo(data) {
+  const editref = firebase.database().ref("ToDos").child(data.id);
+  editref.update(data);
+}
+export async function deletetodo(data) {
+  const deleteref = firebase.database().ref("ToDos").child(data.id);
+  deleteref.remove();
+}
+
 export async function getActiveTodo() {
   const sampleDate = await getAllTodos();
   console.log(sampleDate);
