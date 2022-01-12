@@ -1,6 +1,7 @@
 const initialState = {
   items: [],
-  filter: "",
+  filter: "action",
+  sort: "due-date-desc",
 };
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -15,6 +16,11 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         filter: action.payload,
+      };
+    case "SORT":
+      return {
+        ...state,
+        sort: action.payload,
       };
     default:
       console.log(["action.payload"]);

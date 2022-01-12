@@ -1,19 +1,21 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
-import { filtertodo } from "../../Redux/actions/userActions";
+import { filtertodo, sorttodo } from "../../Redux/actions/userActions";
 
 const Filter = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const changehandler = (event) => {
-    const value = event.target.value;
     dispatch(filtertodo(event.target.value));
     // if (value === "active") {
     //   router.push("/");
     // } else if (value === "completed") {
     //   router.push("/completed");
     // }
+  };
+  const sortChangeHandler = (event) => {
+    dispatch(sorttodo(event.target.value));
   };
   return (
     <div>
@@ -34,11 +36,14 @@ const Filter = () => {
           <label className="text-secondary my-2 pr-2 view-opt-label">
             Sort
           </label>
-          <select className="custom-select custom-select-sm btn my-2">
-            <option value="added-date-asc" selected>
-              Added date
+          <select
+            className="custom-select custom-select-sm btn my-2"
+            onChange={sortChangeHandler}
+          >
+            <option value="due-date-desc" selected>
+              Due date
             </option>
-            <option value="due-date-desc">Due date</option>
+            <option value="added-date-asc">Added date</option>
           </select>
           <i
             className="fa fa fa-sort-amount-asc text-info btn mx-0 px-0 pl-1"

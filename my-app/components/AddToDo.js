@@ -10,8 +10,13 @@ const AddToDo = (props) => {
       const year = selectedDate.getUTCFullYear();
       const month = selectedDate.getUTCMonth() + 1;
       const date = selectedDate.getUTCDate();
+      const addDate = new Date();
+      const curryear = addDate.getUTCFullYear();
+      const currmonth = addDate.getUTCMonth() + 1;
+      const currdate = addDate.getUTCDate();
       const data = {
         toDo,
+        AddedDate: `${curryear}-${currmonth}-${currdate}`,
         selectedDate: `${year}-${month}-${date}`,
         isComplete: false,
       };

@@ -6,16 +6,21 @@ import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { update, fetchtodo } from "../Redux/actions/userActions";
 
 const ActiveToDO = (props) => {
+  const [addButton, setAddButton] = useState(true);
   const todos = useSelector((state) => state.todoList.items, shallowEqual);
   const filter = useSelector((state) => state.todoList.filter, shallowEqual);
+  const sort = useSelector((state) => state.todoList.sort, shallowEqual);
 
-  const addButton = filter === "active" ? true : false;
+  if (filter == "complete") {
+    setAddButton(false);
+  }
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(fetchtodo());
   }, []);
+
   const addTodoHandler = (obj) => {
+    console.log(obj);
     insertData(obj);
     const newTodo = [obj, ...todos];
     dispatch(update(newTodo));
@@ -40,12 +45,36 @@ const ActiveToDO = (props) => {
     dispatch(update(editArr));
     edittodo(obj);
   };
+
+  const toggleHandler = (id, obj) => {
+    const editArr = todos.map((todo) => {
+      if (todo.id === id) {
+        todo.isComplete = !todo.isComplete;
+      }
+      return todo;
+    });
+    dispatch(update(editArr));
+    edittodo(obj);
+    dispatch(fetchtodo());
+  };
+  const sortedArray = todos.sort((a, b) => {
+    if (sort == "due-date-desc") {
+      return new Date(a.selectedDate) - new Date(b.selectedDate);
+    } else if (sort == "added-date-asc") {
+      return new Date(b.AddedDate) - new Date(a.AddedDate);
+    }
+  });
+  const filterTodos = sortedArray.filter((todo) =>
+    todo.toDo.toLowerCase().includes(props.search.toLowerCase())
+  );
+
+  const listofTodos = props.search === "" ? [...sortedArray] : filterTodos;
   return (
     <div>
       {addButton && <AddToDo toDoHandler={addTodoHandler} />}
       <div className="row mx-1 px-5 pb-3 w-80">
         <div className="col mx-auto">
-          {todos.map((todo) => {
+          {listofTodos.map((todo) => {
             if (filter === "active") {
               if (!todo.isComplete) {
                 return (
@@ -53,6 +82,7 @@ const ActiveToDO = (props) => {
                     todo={todo}
                     deleteItem={deleteHandler}
                     editItem={editHandler}
+                    toggleItem={toggleHandler}
                   />
                 );
               }
@@ -63,6 +93,7 @@ const ActiveToDO = (props) => {
                     todo={todo}
                     deleteItem={deleteHandler}
                     editItem={editHandler}
+                    toggleItem={toggleHandler}
                   />
                 );
               }

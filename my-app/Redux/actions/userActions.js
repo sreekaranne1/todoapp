@@ -20,3 +20,10 @@ export const filtertodo = (filter) => async (dispatch) => {
     payload: filter,
   });
 };
+
+export const sorttodo = (sort) => async (dispatch) => {
+  dispatch({
+    type: "SORT",
+    payload: sort,
+  });
+};

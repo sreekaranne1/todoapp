@@ -1,6 +1,9 @@
 import React from "react";
 
-const MainNavigation = () => {
+const MainNavigation = (props) => {
+  const changeHandler = (event) => {
+    props.searchInput(event.target.value);
+  };
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-around" }}>
@@ -38,6 +41,7 @@ const MainNavigation = () => {
                 "
                   type="text"
                   placeholder="Search"
+                  onChange={changeHandler}
                 />
               </div>
             </div>

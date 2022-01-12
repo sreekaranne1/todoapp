@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { useState } from "react";
 import Head from "next/head";
 import Layout from "../components/layout/Layout";
 import "../styles/globals.css";
@@ -6,6 +6,11 @@ import Store from "../Redux/Store";
 import { Provider } from "react-redux";
 
 function MyApp({ Component, pageProps }) {
+  const [searchfield, setSearchfield] = useState("");
+
+  const onSearchChange = (value) => {
+    setSearchfield(value);
+  };
   return (
     <Provider store={Store}>
       <Head>
@@ -20,8 +25,8 @@ function MyApp({ Component, pageProps }) {
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
       </Head>
-      <Layout>
-        <Component {...pageProps} />
+      <Layout searchInput={onSearchChange}>
+        <Component {...pageProps} search={searchfield} />
       </Layout>
     </Provider>
   );
