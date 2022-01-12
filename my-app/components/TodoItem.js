@@ -1,6 +1,28 @@
 import React from "react";
+import EditToDoForm from "./EditToDoForm";
+import useToggleState from "../hooks/useToggleState";
 
-const TodoItem = () => {
+const TodoItem = (props) => {
+  const { todo } = props;
+  const [isEditing, toggle] = useToggleState(false);
+  if (isEditing) {
+    return (
+      <div
+        className="row
+    bg-white
+    rounded
+    shadow-sm
+    p-2
+    add-todo-wrapper
+    align-items-center
+    justify-content-center todo-row"
+        style={{ margin: "2%" }}
+      >
+        <EditToDoForm task={todo.toDo} toggleEditForm={toggle} />
+      </div>
+    );
+  }
+
   return (
     <div
       className="row
@@ -31,7 +53,7 @@ const TodoItem = () => {
           </h2>
         </div>
         <div className="col px-1 m-1 d-flex align-items-center">
-          <input
+          {/* <input
             type="text"
             className="
                   form-control form-control-lg
@@ -44,19 +66,8 @@ const TodoItem = () => {
             readonly
             value="Buy groceries for next week"
             title="Buy groceries for next week"
-          />
-          <input
-            type="text"
-            className="
-                  form-control form-control-lg
-                  border-0
-                  edit-todo-input
-                  rounded
-                  px-3
-                  d-none
-                "
-            value="Buy groceries for next week"
-          />
+          /> */}
+          {todo.toDo}
         </div>
         <div className="col-auto m-1 p-0 px-3 ">
           <div className="row">
@@ -77,7 +88,7 @@ const TodoItem = () => {
                 title=""
                 data-original-title="Due on date"
               ></i>
-              <h6 className="text my-2 pr-2">28th Jun 2020</h6>
+              <h6 className="text my-2 pr-2">{todo.selectedDate}</h6>
             </div>
           </div>
         </div>
@@ -92,6 +103,10 @@ const TodoItem = () => {
                 data-toggle="tooltip"
                 data-placement="bottom"
                 title="Edit todo"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggle();
+                }}
               ></i>
             </h5>
             <h5 className="m-0 p-0 px-2">
@@ -113,7 +128,7 @@ const TodoItem = () => {
                 data-original-title="Created date"
               ></i>
               <label className="date-label my-2 text-black-50">
-                28th Jun 2020
+                {todo.selectedDate}
               </label>
             </div>
           </div>

@@ -23,8 +23,8 @@ const Filter = () => {
             className="custom-select custom-select-sm btn my-2"
             onChange={changehandler}
           >
-            <option value="completed">Completed</option>
             <option value="active">Active</option>
+            <option value="completed">Completed</option>
           </select>
         </div>
         <div className="col-auto d-flex align-items-center px-1 pr-3">

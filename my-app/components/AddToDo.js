@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { insertData } from "../DUMMY_DATA";
 const AddToDo = (props) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [toDo, setToDo] = useState("");
 
   const clickHandler = () => {
-    console.log(toDo);
-    console.log(selectedDate.getDate());
     if (toDo && selectedDate) {
+      const year = selectedDate.getUTCFullYear();
+      const month = selectedDate.getUTCMonth() + 1;
+      const date = selectedDate.getUTCDate();
       const data = {
         toDo,
-        selectedDate,
+        selectedDate: `${year}-${month}-${date}`,
+        isComplete: false,
       };
+      insertData(data);
       props.toDoHandler(data);
       setToDo("");
       setSelectedDate(new Date());
