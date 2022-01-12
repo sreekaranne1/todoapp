@@ -1,16 +1,19 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { filtertodo } from "../../Redux/actions/userActions";
 
 const Filter = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const changehandler = (event) => {
     const value = event.target.value;
-    console.log(event.target.value);
-    if (value === "active") {
-      router.push("/");
-    } else if (value === "completed") {
-      router.push("/completed");
-    }
+    dispatch(filtertodo(event.target.value));
+    // if (value === "active") {
+    //   router.push("/");
+    // } else if (value === "completed") {
+    //   router.push("/completed");
+    // }
   };
   return (
     <div>

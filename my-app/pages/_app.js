@@ -2,10 +2,12 @@ import { Fragment } from "react";
 import Head from "next/head";
 import Layout from "../components/layout/Layout";
 import "../styles/globals.css";
+import Store from "../Redux/Store";
+import { Provider } from "react-redux";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Fragment>
+    <Provider store={Store}>
       <Head>
         <link
           href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -21,7 +23,7 @@ function MyApp({ Component, pageProps }) {
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </Fragment>
+    </Provider>
   );
 }
 

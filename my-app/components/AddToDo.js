@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { insertData } from "../DUMMY_DATA";
 const AddToDo = (props) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [toDo, setToDo] = useState("");
@@ -16,7 +15,7 @@ const AddToDo = (props) => {
         selectedDate: `${year}-${month}-${date}`,
         isComplete: false,
       };
-      insertData(data);
+
       props.toDoHandler(data);
       setToDo("");
       setSelectedDate(new Date());
